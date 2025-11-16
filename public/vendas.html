@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Vendas</title>
+</head>
+<body>
+  <h1>Lista de Vendas</h1>
+
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Mês</th>
+        <th>Valor Vendido</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaVendas"></tbody>
+  </table>
+
+  <script>
+    async function carregarVendas() {
+      const resposta = await fetch("http://localhost:3000/vendas");
+      const vendas = await resposta.json();
+
+      const tabela = document.getElementById("tabelaVendas");
+
+      vendas.forEach(venda => {
+        const linha = `
+          <tr>
+            <td>${venda.mes}</td>
+            <td>${venda.valorVendido}</td>
+          </tr>
+        `;
+
+        tabela.innerHTML += linha;
+      });
+    }
+
+    carregarVendas();
+  </script>
+</body>
+</html>

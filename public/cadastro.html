@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cadastrar Venda</title>
+  </head>
+  <body>
+    <h1>Cadastrar Venda</h1>
+
+    <form id="formVenda">
+      <label for="mes">Mês:</label><br />
+      <input type="text" id="mesID" name="mes" required /><br /><br />
+
+      <label for="valor">Valor:</label><br />
+      <input type="number" id="valorID" name="valorVendido" required /><br /><br />
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p id="resultado"></p>
+
+    <script>
+      document
+        .getElementById("formVenda")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const mes = document.getElementById("mesID").value;
+          const valor = document.getElementById("valorID").value;
+
+         const dados = {
+          mes: Number(mes),
+          valorVendido: Number(valor)
+         };
+ 
+
+          const resposta = await fetch("http://localhost:3000/vendas", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dados),
+          });
+
+          const resultado = await resposta.json();
+
+          document.getElementById("resultado").innerText =
+            "Resposta da API: " + JSON.stringify(resultado);
+        });
+    </script>
+  </body>
+</html>
